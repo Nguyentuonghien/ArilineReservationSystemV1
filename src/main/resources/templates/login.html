@@ -23,8 +23,7 @@
 					<img th:src="@{/images/login.jpg}" class="img-responsive center-block"
 			             width="300" height="300" alt="Logo" />
 			
-				<form th:action="@{/login}" th:object="${customer}" method="post">
-						
+				<form th:action="@{/login}" th:object="${customer}" method="post">						
 						<div class="form-group">
                             <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="email" id="email" placeholder="Email"/>
@@ -46,10 +45,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<span>New user? <a href="/"
-							th:href="@{/showCustomerForm}">Register here</a></span>
+						<span>New user? <a th:href="@{/showCustomerForm}">Register here</a></span>
 					</div>
 				</form>
+				
 			</div>
 		</div>
 
