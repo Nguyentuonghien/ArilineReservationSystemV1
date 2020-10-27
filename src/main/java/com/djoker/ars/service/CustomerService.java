@@ -13,4 +13,8 @@ public interface CustomerService {
 	
 	Customer findByEmail(String email);
 	
+	void deleteCustomerById(Long id);
+	
+	Customer saveCustomer(Customer customer);
+	
 }
