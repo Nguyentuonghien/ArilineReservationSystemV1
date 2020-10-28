@@ -63,11 +63,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService{
 	public Customer saveCustomer(Customer customer) {
 		Customer tempCustomer = new Customer();
 		
-		// save all field vào đối tượng tempCustomer(id tự tăng nên k cần set)
+		// set all field trong form register(đăng kí) vào đối tượng tempCustomer(id tự tăng nên k cần set)
 		tempCustomer.setEmail(customer.getEmail());
 		tempCustomer.setFirstName(customer.getFirstName());
 		tempCustomer.setLastName(customer.getLastName());
-		
+		tempCustomer.setUsername(customer.getUsername());
 		// mã hóa password khi ta setPassword() cho user
 		tempCustomer.setPassword(passwordEncoder.encode(customer.getPassword()));
 		
@@ -81,9 +81,9 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService{
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// đầu tiên mình query xuống database xem có user đó không  
-		Customer customer = customerRepo.findByEmail(email);
+		Customer customer = customerRepo.findByUsername(username);
 		// nếu khong tìm thấy User thì mình thông báo lỗi
 		if(customer == null) {
 			throw new UsernameNotFoundException("Invalid details!");
@@ -116,16 +116,13 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService{
 	private UserDetails buildUserForAuthentication(Customer customer, List<GrantedAuthority> authorities) {
 		return new User(customer.getEmail(), customer.getPassword(), true, true, true, true, authorities);
 	}
-	
+
+	@Override
+	public Customer findCustomerByUsername(String username) {
+		return customerRepo.findByUsername(username);
+	}
+
 }
-
-
-
-
-
-
-
-
 
 
 

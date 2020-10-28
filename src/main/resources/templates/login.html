@@ -23,11 +23,11 @@
 					<img th:src="@{/images/login.jpg}" class="img-responsive center-block"
 			             width="300" height="300" alt="Logo" />
 			
-				<form th:action="@{/login}" th:object="${customer}" method="post">						
+				<form th:action="@{/login}" th:object="${customerObj}" method="post">						
 						<div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="email" id="email" placeholder="Email"/>
-                        </div>
+                            <label for="Username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="username" id="username" placeholder="Username"/>
+                        </div>    
                         <div class="form-group">
                             <label for="password"><i class="zmdi zmdi-lock"></i></label>
                             <input type="password" name="password" id="password" placeholder="Password"/>
