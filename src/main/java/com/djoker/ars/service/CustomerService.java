@@ -17,4 +17,6 @@ public interface CustomerService {
 	
 	Customer saveCustomer(Customer customer);
 	
+	Customer findCustomerByUsername(String username);
+	
 }
