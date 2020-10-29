@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="myheader">
-	<th:link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-		crossorigin="anonymous">
-
+			
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous">
+			
 <style>
 /* Add a black background color to the top navigation */
 .topnav {
@@ -36,10 +36,9 @@
 }
 </style>
 		<div class="topnav">
-			<a class="active" href="/">Home</a> <a href="/showCustomerForm">Register</a>
-			<a href="/login">Login</a> <a href="/flight">Flight</a> <a
-				href="/airplane">Airplane</a> <a href="/americanairlines">American
-				Airlines</a> <a href="/profile">Profile</a>
+			<a class="active" th:href="@{/}">Home</a> 
+			<a th:href="@{/showCustomerForm}">Register</a>
+			<a th:href="@{/login}">Login</a> 
 		</div>
 </div>
 
