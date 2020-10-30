@@ -16,10 +16,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
-import com.sun.istack.NotNull;
+import org.hibernate.validator.constraints.Length;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -28,27 +36,28 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Size(min = 1, max = 20)
-	@NotNull
+	@NotEmpty(message = "Please type your first name")
+	@Length(min = 3, message = "Your first name need to be at least 3 characters")
 	@Column(name = "first_name")
 	private String firstName;
 
-	@Size(min = 1, max = 20)
-	@NotNull
+	@NotEmpty(message = "Please type your last name")
+	@Length(min = 3, message = "Your last name need to be at least 3 characters")
 	@Column(name = "last_name")
 	private String lastName;
 
 	@NotEmpty(message = "Please type your email")
 	@Column(name = "email")
+	@Length(min = 5, message = "Your email need to be at least 5 characters")
 	@Email                     // đúng định dạng của mail
 	private String email;
 
-	@NotNull
-	@Column(name = "password")
+	@NotEmpty(message = "Please type your passsword")
+	@Length(min = 5, message = "Your password need to be at least 5 characters")
 	private String password;
 	
 	@NotEmpty(message = "Please type your username")
-	@Column(name = "username")
+	@Length(min = 5, message = "Your username need to be at least 5 characters")
 	private String username;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -59,6 +68,12 @@ public class Customer {
 	
 	public Customer() {
 		
+	}
+	
+	public Customer(String firstName, String lastName, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
 
 	public Long getId() {
