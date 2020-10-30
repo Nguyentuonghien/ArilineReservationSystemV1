@@ -48,6 +48,7 @@ public class CustomerController {
 	
 	@PostMapping("/register")
 	public String saveCustomer(@ModelAttribute("customerObj") @Valid Customer customer, BindingResult bindingResult, Model model) {
+		
 		Customer customerTemp = customerService.findByEmail(customer.getEmail());
 		// tìm thấy customerTemp đã tồn tại trong DB --> báo lỗi
 		if(customerTemp != null) {
@@ -57,6 +58,7 @@ public class CustomerController {
 			return "register";
 		}		
 		customerService.saveCustomer(customer);	
+		model.addAttribute("successMessage", "Customer has been registered successfully");
 		return "redirect:/";
 	}
 	
