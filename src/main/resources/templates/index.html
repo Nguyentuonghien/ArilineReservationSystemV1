@@ -14,7 +14,7 @@
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>
 		</div>
-		<table border="1" class="table table-striped table-responsive-md">
+		<table border="2" class="table table-striped table-responsive-md">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -40,6 +40,14 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<div class="container">
+			<img th:src="@{/images/pdf.png}" class="img-responsive center-block" width="100" height="100" alt="Logo" />
+			<a th:href = "@{/download-pdf}">Download PDF Document</a>
+			<p>
+				Welcome <span sec:authentication=={userAccount.username}>User</span>
+			</p>
+		</div>
 		
 	</div>
 	
