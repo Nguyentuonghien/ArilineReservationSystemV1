@@ -1,7 +1,12 @@
 package com.djoker.ars.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +23,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.djoker.ars.model.customer.Customer;
 import com.djoker.ars.service.CustomerService;
+import com.djoker.ars.service.PdfService;
+import com.lowagie.text.DocumentException;
 
 @Controller
 public class CustomerController {
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private PdfService pdfService;
 	
 	@GetMapping("/")
 	public String showAllCustomer(Model model) {
@@ -92,6 +102,23 @@ public class CustomerController {
 	    model.addAttribute("adminObj", "Welcome " + username);
 	    model.addAttribute("adminMessage", "Content available only for users with admin rights");
 		return "admin/home";
+	}
+	
+	// download tài liệu pdf được tạo bởi PdfService.
+	// HttpServletResponse : ghi nội dung của tệp PDF vào luồng đầu ra của phản hồi ==> trình duyệt web sẽ có thể tải xuống tài liệu PDF đã xuất
+	@GetMapping("/download-pdf")
+	public void downloadPDFResource(HttpServletResponse response) throws IOException {
+		try {
+			Path file = Paths.get(pdfService.generatePdf().getAbsolutePath());
+			if(Files.exists(file)) {
+				response.setContentType("application/pdf");
+				response.addHeader("Content-Disposition", "attachment; filename=" + file.getFileName());
+				Files.copy(file, response.getOutputStream());
+				response.getOutputStream().flush();
+			}
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	
