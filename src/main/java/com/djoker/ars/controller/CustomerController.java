@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.djoker.ars.exceptions.CustomerException;
 import com.djoker.ars.model.customer.Customer;
 import com.djoker.ars.service.CustomerService;
 import com.djoker.ars.service.PdfService;
@@ -121,7 +124,21 @@ public class CustomerController {
 		}		
 	}
 	
+	@GetMapping("/customer/{email}")
+	public ResponseEntity<Customer> getCustomerByEmail(@PathVariable("email") String email) throws CustomerException{ // trả về 1 ResponseEntity kiểu Customer
+		Customer customer = customerService.findByEmail(email);
+		// không tìm thấy customer trong Database
+		if(customer == null) {                                             
+			throw new CustomerException("email address is not valid: "+email);
+		}
+		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+	}
 	
+	@GetMapping("/customer")
+	public ResponseEntity<List<Customer>> getAllCustomers() {
+		List<Customer> customers = customerService.getAllCustomers();
+		return new ResponseEntity<List<Customer>>(customers, HttpStatus.OK);	
+	}
 	
 }
 
